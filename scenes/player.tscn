@@ -1,0 +1,108 @@
+[gd_scene load_steps=9 format=3 uid="uid://brbbu2g5n0s83"]
+
+[ext_resource type="Texture2D" uid="uid://dnnqnxm3vlqvr" path="res://assets/sprites/character.png" id="1_qydb2"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_tptsl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gcs2q"]
+atlas = ExtResource("1_qydb2")
+region = Rect2(0, 187, 16, 16)
+
+[sub_resource type="Animation" id="Animation_4oiau"]
+resource_name = "idle"
+length = 1.25
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.23333),
+"transitions": PackedFloat32Array(1, 2.46229, 1),
+"update": 0,
+"values": [0.0, -0.0349066, 0.0349066]
+}
+
+[sub_resource type="Animation" id="Animation_jnoc7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.0174533]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1nhmm"]
+resource_name = "walk"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.139626, 0.139626]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_to252"]
+_data = {
+"RESET": SubResource("Animation_jnoc7"),
+"idle": SubResource("Animation_4oiau"),
+"walk": SubResource("Animation_1nhmm")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7ol2q"]
+radius = 7.0
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(0, -8)
+script = ExtResource("1_tptsl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -0.0174533
+texture = SubResource("AtlasTexture_gcs2q")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_to252")
+}
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7ol2q")
