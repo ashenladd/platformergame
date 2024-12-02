@@ -20,7 +20,7 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
-			velocity.y = JUMP_VELOCITY
+			velocity.y = JUMP_VELOCITY * 1.2
 			print("First Jump!")
 		elif can_doublejump and not is_on_floor():
 			can_doublejump = false
